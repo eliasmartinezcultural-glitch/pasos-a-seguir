@@ -60,4 +60,49 @@ $("mission-action").addEventListener("click",missionHelp);$("map-legend").addEve
 $("dialog-close").addEventListener("click",closeDialog);$("dialog-backdrop").addEventListener("click",e=>{if(e.target===$("dialog-backdrop"))closeDialog();});
 $("reset-button").addEventListener("click",()=>{if(!confirm("¿Querés borrar tu partida y comenzar de nuevo?"))return;state={stage:0,done:[],notes:[],inventory:["📓"],player:{x:46,y:76},muted:true,discovered:[]};save();render();toast("Partida reiniciada.");});
 document.querySelectorAll(".time-node").forEach(b=>b.addEventListener("click",()=>{let idx=milestones.findIndex(m=>m.year===Number(b.dataset.year));if(idx>state.stage){toast("Completá las misiones para descubrir ese año.");return;}state.stage=idx;state.discovered=[];save();render();}));
+
+/* Movimiento del protagonista: teclado + controles táctiles */
+const moveTargets=[
+ {id:"river",x:17,y:28,label:"Río Neuquén",kind:"place"},
+ {id:"project",x:37,y:44,label:"Proyecto productivo",kind:"place"},
+ {id:"pump",x:18,y:36,label:"Bombeo",kind:"place"},
+ {id:"canal",x:36,y:36,label:"Bocatoma",kind:"place"},
+ {id:"field",x:53,y:52,label:"Parcelas",kind:"place"},
+ {id:"town",x:65,y:79,label:"Pueblo",kind:"place"},
+ {id:"mateo",x:46,y:76,label:"Mateo",kind:"person"},
+ {id:"julia",x:72,y:48,label:"Julia",kind:"person"}
+];
+let heldDirection=null,heldTimer=null;
+function movePlayer(direction){
+ const step=2.1;let p=state.player;
+ if(direction==="up")p.y=Math.max(8,p.y-step);
+ if(direction==="down")p.y=Math.min(91,p.y+step);
+ if(direction==="left")p.x=Math.max(5,p.x-step);
+ if(direction==="right")p.x=Math.min(95,p.x+step);
+ $("player-marker").setAttribute("transform","translate("+mapPlayerPoint().x+" "+mapPlayerPoint().y+")");
+ save();
+}
+function nearestTarget(){
+ let best=null,dist=Infinity;
+ moveTargets.forEach(t=>{let d=Math.hypot(state.player.x-t.x,state.player.y-t.y);if(d<dist){dist=d;best=t;}});
+ return dist<=10?best:null;
+}
+function interactNearby(){
+ const t=nearestTarget();
+ if(!t){toast("Acercate a un lugar o habitante para interactuar.");return;}
+ if(t.kind==="person")talk(t.id);else interactPlace(t.id);
+}
+function startMove(dir){movePlayer(dir);heldDirection=dir;clearInterval(heldTimer);heldTimer=setInterval(()=>movePlayer(heldDirection),115);}
+function stopMove(){heldDirection=null;clearInterval(heldTimer);heldTimer=null;}
+document.querySelectorAll("[data-move]").forEach(btn=>{
+ btn.addEventListener("pointerdown",e=>{e.preventDefault();startMove(btn.dataset.move);});
+ ["pointerup","pointerleave","pointercancel"].forEach(ev=>btn.addEventListener(ev,stopMove));
+});
+document.addEventListener("keydown",e=>{
+ const key=e.key.toLowerCase();const dirs={arrowup:"up",w:"up",arrowdown:"down",s:"down",arrowleft:"left",a:"left",arrowright:"right",d:"right"};
+ if(dirs[key]){e.preventDefault();if(!e.repeat)movePlayer(dirs[key]);}
+ if(key==="e"&&!e.repeat){e.preventDefault();interactNearby();}
+});
+$("interact-button").addEventListener("click",interactNearby);
+
 load();state.discovered=state.discovered||[];render();
