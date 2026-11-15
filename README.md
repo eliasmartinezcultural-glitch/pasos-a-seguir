@@ -1,22 +1,22 @@
 # El Camino del Chañar — Ocarina LAB
 **Versión 0.3 · Simulador histórico de pueblo**
 
-## Concepto
-Un mundo 2D esquemático y progresivo. El jugador recorre un territorio inspirado en el valle de San Patricio del Chañar, conversa con personajes ficticios y cumple misiones basadas en acontecimientos históricos documentados. El mapa cambia con el avance: bombeo, canales, parcelas cultivadas, arboledas y un núcleo urbano.
+## Qué es
+Un videojuego web de exploración y simulación histórica. El jugador recorre un mapa 2D ilustrado del territorio, conversa con personajes, descubre lugares, cumple misiones y desbloquea etapas. El mundo cambia con los hitos documentados: aparecen el sistema de bombeo, canales, parcelas cultivadas, arboledas y el primer núcleo urbano esquemático.
 
 ## Cómo jugar
-- Tocar los marcadores del mapa.
-- Hablar con Mateo y Julia.
-- Cumplir los objetivos de cada etapa.
-- Desbloquear años en la línea de tiempo.
-- Consultar la bitácora y los objetos obtenidos.
+1. Explorá los marcadores del mapa.
+2. Hablá con Mateo y Julia.
+3. Completá los descubrimientos indicados en cada misión.
+4. Desbloqueá los años de la línea de tiempo.
+5. Consultá la bitácora y la mochila.
 
-## Etapas representadas
-- 1966: compra del campo El Chañar por vecinos de Cinco Saltos.
-- 1968: adquisición de tierras por Frigorífico Cipolletti S.A. para el proyecto productivo.
-- 1969: obras de sistematización y primeros cultivos regados por bombeo desde el río Neuquén; primeras cosechas de papas.
-- 1971: primera bocatoma y ampliación del área de riego.
-- 1973: fundación de San Patricio del Chañar, el 21 de mayo.
+## Evolución histórica representada
+- **1966:** compra del campo El Chañar por vecinos de Cinco Saltos.
+- **1968:** adquisición de tierras por Frigorífico Cipolletti S.A. para desarrollar un proyecto productivo.
+- **1969:** obras de sistematización y primeros cultivos regados por bombeo desde el río Neuquén; primeras cosechas de papas.
+- **1971:** primera bocatoma y ampliación del área de riego.
+- **1973:** fundación de San Patricio del Chañar, el 21 de mayo.
 
 ## Fuentes
 - Municipalidad de San Patricio del Chañar, [Nuestra Identidad](https://www.sanpatricio.gob.ar/identidad).
@@ -24,10 +24,10 @@ Un mundo 2D esquemático y progresivo. El jugador recorre un territorio inspirad
 - Legislatura del Neuquén, [46.º aniversario de San Patricio del Chañar](https://www.legislaturaneuquen.gob.ar/SVRFILES/hln/documentos/DiaSesio/XLVIII/DXLVIII_08.pdf).
 
 ## Honestidad histórica
-Los personajes y sus diálogos son ficción narrativa, no testimonios. El mapa es ilustrativo y esquemático, no catastral ni georreferenciado. La secuencia de cambios visuales representa hitos documentados, pero no pretende reconstruir con precisión las ubicaciones, dimensiones ni la apariencia exacta de cada obra histórica.
+Mateo y Julia son personajes ficticios. Sus diálogos son recreaciones y no testimonios reales. El mapa es narrativo y esquemático: no es catastral ni georreferenciado, y no afirma representar la ubicación exacta ni el aspecto preciso de las obras históricas. Las transformaciones visuales simbolizan hitos respaldados por fuentes.
 
 ## Tecnología
-HTML, CSS, SVG y JavaScript sin frameworks ni backend. Diseño adaptable a móviles, tabletas y computadoras. La partida se guarda en localStorage del navegador.
+HTML, CSS, SVG y JavaScript sin frameworks, backend ni base de datos. Adaptable a celular, tablet y computadora. La partida se guarda en el almacenamiento local del navegador.
 
-## Publicar
+## Publicación
 En GitHub: Settings → Pages → Deploy from a branch → main → /(root) → Save.
