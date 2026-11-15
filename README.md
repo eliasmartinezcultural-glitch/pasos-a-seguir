@@ -1,15 +1,15 @@
 # El Camino del Chañar — Ocarina LAB
-**Versión 0.3 · Simulador histórico de pueblo**
+**Versión 0.4 · Aventura histórica jugable**
 
 ## Qué es
 Un videojuego web de exploración y simulación histórica. El jugador recorre un mapa 2D ilustrado del territorio, conversa con personajes, descubre lugares, cumple misiones y desbloquea etapas. El mundo cambia con los hitos documentados: aparecen el sistema de bombeo, canales, parcelas cultivadas, arboledas y el primer núcleo urbano esquemático.
 
 ## Cómo jugar
-1. Explorá los marcadores del mapa.
-2. Hablá con Mateo y Julia.
-3. Completá los descubrimientos indicados en cada misión.
-4. Desbloqueá los años de la línea de tiempo.
-5. Consultá la bitácora y la mochila.
+1. Mové a Mateo con las flechas o WASD en computadora; en celular usá los controles en pantalla.
+2. Acercate a un lugar o habitante.
+3. Presioná E o tocá INTERACTUAR para descubrirlo y conversar.
+4. Completá las misiones para desbloquear nuevas etapas históricas.
+5. La partida se guarda en el navegador.
 
 ## Evolución histórica representada
 - **1966:** compra del campo El Chañar por vecinos de Cinco Saltos.
@@ -27,7 +27,7 @@ Un videojuego web de exploración y simulación histórica. El jugador recorre u
 Mateo y Julia son personajes ficticios. Sus diálogos son recreaciones y no testimonios reales. El mapa es narrativo y esquemático: no es catastral ni georreferenciado, y no afirma representar la ubicación exacta ni el aspecto preciso de las obras históricas. Las transformaciones visuales simbolizan hitos respaldados por fuentes.
 
 ## Tecnología
-HTML, CSS, SVG y JavaScript sin frameworks, backend ni base de datos. Adaptable a celular, tablet y computadora. La partida se guarda en el almacenamiento local del navegador.
+HTML, CSS, SVG y JavaScript sin frameworks, backend ni base de datos. Adaptable a celular, tablet y computadora. Incluye movimiento continuo con teclado y controles táctiles, interacción por proximidad y guardado local. La partida se guarda en el almacenamiento local del navegador.
 
 ## Publicación
 En GitHub: Settings → Pages → Deploy from a branch → main → /(root) → Save.
