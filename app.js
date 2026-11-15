@@ -80,7 +80,6 @@ function movePlayer(direction){
  if(direction==="left")p.x=Math.max(5,p.x-step);
  if(direction==="right")p.x=Math.min(95,p.x+step);
  $("player-marker").setAttribute("transform","translate("+mapPlayerPoint().x+" "+mapPlayerPoint().y+")");
- save();
 }
 function nearestTarget(){
  let best=null,dist=Infinity;
@@ -93,16 +92,17 @@ function interactNearby(){
  if(t.kind==="person")talk(t.id);else interactPlace(t.id);
 }
 function startMove(dir){movePlayer(dir);heldDirection=dir;clearInterval(heldTimer);heldTimer=setInterval(()=>movePlayer(heldDirection),115);}
-function stopMove(){heldDirection=null;clearInterval(heldTimer);heldTimer=null;}
+function stopMove(){heldDirection=null;clearInterval(heldTimer);heldTimer=null;save();}
 document.querySelectorAll("[data-move]").forEach(btn=>{
  btn.addEventListener("pointerdown",e=>{e.preventDefault();startMove(btn.dataset.move);});
  ["pointerup","pointerleave","pointercancel"].forEach(ev=>btn.addEventListener(ev,stopMove));
 });
 document.addEventListener("keydown",e=>{
  const key=e.key.toLowerCase();const dirs={arrowup:"up",w:"up",arrowdown:"down",s:"down",arrowleft:"left",a:"left",arrowright:"right",d:"right"};
- if(dirs[key]){e.preventDefault();if(!e.repeat)movePlayer(dirs[key]);}
+ if(dirs[key]){e.preventDefault();if(!e.repeat)startMove(dirs[key]);}
  if(key==="e"&&!e.repeat){e.preventDefault();interactNearby();}
 });
+document.addEventListener("keyup",e=>{if(["arrowup","arrowdown","arrowleft","arrowright","w","a","s","d"].includes(e.key.toLowerCase()))stopMove();});
 $("interact-button").addEventListener("click",interactNearby);
 
 load();state.discovered=state.discovered||[];render();
