@@ -1,86 +1,60 @@
 # SAN PATRICIO DEL CHAÑAR
-## Concepto de videojuego histórico · Ocarina LAB
+## Videojuego histórico de aventura · Ocarina LAB
 
-**Estado del proyecto: IDEA BASE — SIN IMPLEMENTACIÓN**
-
-## La idea
-
-Crear un videojuego de aventura, exploración y simulación histórica ambientado en San Patricio del Chañar, Neuquén. El jugador es protagonista de un recorrido por el territorio y participa de los cambios que dieron origen al pueblo.
-
-La referencia creativa es **Space Station Silicon Valley** (Nintendo 64): tomar como inspiración su espíritu de videojuego 3D/aventura, el mundo lleno de vida, la exploración, los personajes memorables, el humor amable y la curiosidad por descubrir qué ocurre en cada rincón. No copiar personajes, escenarios, música, nombres, diseños ni elementos protegidos del juego original. Construir una identidad visual propia, chañarense y patagónica.
-
-## Fantasía principal del jugador
-
+<blockquote>
 **“Yo estuve ahí. Yo ayudé a transformar este lugar.”**
+</blockquote>
 
-El jugador no responde preguntas ni mira una exposición histórica. Camina, explora, conversa, encuentra objetos, resuelve pequeños desafíos y toma parte en misiones inspiradas en acontecimientos documentados. Cada avance deja una transformación visible en el territorio.
+**Estado:** Biblia de diseño v1.0 creada. El proyecto todavía no tiene una versión jugable implementada.
 
-## Cómo se juega
+## Qué estamos construyendo
 
-- Explorar un mundo con caminos, río, monte, chacras, canales, construcciones y espacios comunitarios.
-- Conocer habitantes y personajes; algunos podrán estar inspirados en oficios y modos de vida de cada época, siempre diferenciando ficción de testimonios reales.
-- Recibir misiones conectadas con acontecimientos históricos.
-- Resolver tareas sencillas: encontrar lugares, transportar elementos, colaborar en obras, reconocer el territorio, organizar recursos y ayudar a la comunidad.
-- Ver cómo el paisaje cambia al avanzar en el tiempo.
-- Descubrir datos históricos integrados al juego, sin convertirlo en un cuestionario escolar.
+Una aventura de exploración y simulación histórica en un mundo inspirado en San Patricio del Chañar, Neuquén. El jugador recorre el monte, la ribera, las zonas de riego, las chacras y el primer núcleo urbano; conoce personajes, realiza misiones y ve cómo el paisaje cambia a través del tiempo.
 
-## Historia real como columna vertebral
+La inspiración de diseño es la curiosidad, el humor amable y la exploración de *Space Station Silicon Valley*, con universo, personajes, arte, música y mecánicas originales. No se copia material protegido.
 
-La cronología inicial de investigación propone estos hitos, que deberán cotejarse y ampliarse con fuentes primarias e institucionales antes de convertirse en misiones definitivas:
+## La experiencia
 
-- **1966:** vecinos de Cinco Saltos adquieren el campo El Chañar.
-- **1968:** Frigorífico Cipolletti S.A. adquiere tierras para un proyecto de sistematización y plantación.
-- **1969:** comienzan obras de sistematización y los primeros cultivos reciben agua bombeada desde el río Neuquén.
-- **1971:** se registra la primera bocatoma, que permite ampliar el área bajo riego.
-- **21 de mayo de 1973:** fecha de fundación de San Patricio del Chañar.
+- Mundo 3D estilizado, cálido y expresivo, con identidad patagónica.
+- Protagonista ficticio personalizable.
+- Personajes con rutinas, oficios, necesidades y pequeñas historias.
+- Día, noche, estaciones y clima.
+- Río, monte, caminos, canales, chacras y espacios comunitarios.
+- Objetos, herramientas, vehículos y fauna contextualizados por época.
+- Misiones breves con resultados visibles.
+- Campaña histórica desde el paisaje previo a la expansión productiva hasta la formación de la localidad.
+- Exploración libre, actividades opcionales y cuaderno de memoria.
+- Controles simples para computadora y celular.
 
-No inventar fechas, protagonistas históricos, ubicaciones exactas, diálogos ni acontecimientos. Cuando una escena sea una recreación, identificarla como ficción. Los hechos históricos deben tener fuente verificable.
+## Documentación del proyecto
 
-## Mundo y evolución visual
+Esta es la biblia de diseño. Cada documento cumple una función:
 
-El territorio es el gran protagonista. Debe cambiar a medida que avanza la partida:
+| Documento | Qué define |
+|---|---|
+| [Biblia central](docs/00-biblia-del-juego.md) | Visión, pilares, protagonista, progresión y alcance |
+| [Mundo y mapa](docs/01-mundo-mapa-y-zonas.md) | Zonas, geografía, capas del mundo y navegación |
+| [Personajes y vida](docs/02-personajes-y-vida.md) | Elenco ficticio, rutinas, diálogos y confianza |
+| [Reglas y simulación](docs/03-reglas-y-simulacion.md) | Tiempo, día/noche, clima, agua, movimiento y persistencia |
+| [Historia y misiones](docs/04-historia-y-misiones.md) | Campaña, capítulos, misiones y recompensas |
+| [Objetos, vehículos y fauna](docs/05-objetos-vehiculos-fauna.md) | Elementos interactivos, transporte, flora y animales |
+| [Arte, interfaz y tecnología](docs/06-arte-interfaz-y-tecnologia.md) | Estilo visual, cámara, controles, accesibilidad y arquitectura |
+| [Investigación y fuentes](docs/07-investigacion-y-fuentes.md) | Fuentes, discrepancias, certeza histórica y datos pendientes |
 
-1. Monte y campo abierto.
-2. Llegada de nuevos proyectos y planificación productiva.
-3. Obras de bombeo y primeros cultivos.
-4. Canales, bocatomas y expansión de las parcelas.
-5. Formación del pueblo y crecimiento de la vida comunitaria.
+## Columna histórica inicial
 
-La evolución no debe limitarse a cambiar una fecha en pantalla: tienen que aparecer y modificarse caminos, agua, vegetación, cultivos, edificios y actividades.
+La investigación parte de hitos que aparecen en fuentes municipales, provinciales y de planificación: adquisición de tierras en 1966 y 1968 según el relato municipal; obras y primeros cultivos regados por bombeo en 1969; primera bocatoma en 1971; y fundación el 21 de mayo de 1973.
 
-## Dirección de arte
+**Advertencia editorial:** existen diferencias entre fuentes sobre algunos detalles de la secuencia, las adquisiciones, superficies y obras. No se convertirán en escenas definitivas hasta cotejarlas. Los personajes compuestos, diálogos y situaciones recreadas se identificarán como ficción.
 
-- Videojuego colorido, cálido, expresivo y legible.
-- Mundo estilizado, caricaturesco y con personalidad; inspiración en la sensación de exploración de los videojuegos de aventura de Nintendo 64, reinterpretada con identidad visual original.
-- Paisaje patagónico reconocible: meseta, monte, río Neuquén, chacras, acequias, caminos y construcciones locales.
-- Personajes con siluetas claras, animaciones expresivas y gestos fáciles de leer.
-- Interfaz mínima: entrar, jugar, moverse, interactuar y consultar la misión actual.
-- Evitar estética psicodélica, exceso de paneles, menús técnicos y pantallas llenas de texto.
+## Decisión de producción
 
-## Diseño de experiencia
+No se construirá todo el pueblo de una vez. El primer objetivo técnico será una demostración vertical pequeña pero divertida: una zona de monte y ribera, protagonista controlable, tres personajes, una misión principal, dos actividades opcionales, una transformación visible, ciclo de luz básico y guardado local.
 
-- El jugador debe entender qué hacer en pocos segundos.
-- Prioridad a la exploración y la acción, no a leer instrucciones extensas.
-- Controles simples y accesibles en computadora y celular.
-- Misiones breves con objetivos claros y recompensas visibles.
-- Guardado de progreso.
-- Sonido y música originales o con licencias compatibles; nunca reutilizar audio del juego de referencia.
-- Diseñar primero una pequeña zona jugable sólida antes de construir un mundo enorme.
-
-## Alcance tecnológico deseado
-
-Proyecto web gratuito, accesible desde navegador, adaptable a computadora y celular. Priorizar tecnologías abiertas y gratuitas, sin backend ni servicios pagos para la primera versión. La tecnología concreta se decidirá cuando se diseñe el prototipo; no se debe confundir este documento conceptual con un juego ya construido.
-
-## Fuentes iniciales para investigación
-
-- Municipalidad de San Patricio del Chañar — [Nuestra Identidad](https://www.sanpatricio.gob.ar/identidad).
-- Consejo Federal de Inversiones — [Plan de Ordenamiento Territorial Ambiental para Añelo, San Patricio del Chañar y Sauzal Bonito](https://www.mininterior.gob.ar/planificacion/pdf/planes-loc/NEUQUEN/Plan-de-Ordenamiento-Territorial-Ambiental-para-las-localidades-A%C3%B1elo-San-Patricio-del-Cha%C3%B1ar-y-Sauzal-Bonito.pdf).
-- Legislatura del Neuquén — [Documento sobre la historia y aniversario de la localidad](https://www.legislaturaneuquen.gob.ar/SVRFILES/hln/documentos/DiaSesio/XLVIII/DXLVIII_08.pdf).
-
-Estas referencias son un punto de partida, no una investigación histórica cerrada.
+La tecnología se elegirá después de probar rendimiento real en el equipo y los celulares objetivo. Se priorizará navegador, tecnologías gratuitas, publicación sencilla y ausencia de backend en la primera etapa.
 
 ## Principio rector
 
 **Primero un videojuego divertido. La historia real le da sentido, profundidad y pertenencia.**
 
-El resultado debe sentirse como una aventura que solo podría suceder en San Patricio del Chañar: un mundo que da ganas de recorrer, descubrir y recordar.
+Proyecto conceptual y de desarrollo de Ocarina LAB.
