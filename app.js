@@ -1,99 +1,36 @@
-const state = { trust: 0, knowledge: 0, memory: 0, completed: [], notes: [], current: "arrival" };
-const scenes = {
-  arrival: {
-    title: "Un lugar para empezar",
-    text: "El camino se abre frente a Mateo. Tiene 19 años, una valija pequeña y una libreta nueva. Ha llegado a la zona buscando trabajo. No conoce a nadie todavía, pero quiere entender cómo se vive y se trabaja en este lugar.",
-    second: "A lo lejos se ve el valle. El viento levanta un poco de polvo. Mateo se detiene, mira alrededor y debe decidir por dónde empezar."
-  },
-  next: {
-    title: "La primera jornada",
-    text: "Después de dar el primer paso, Mateo comprende algo: para conocer un lugar no alcanza con mirarlo desde el camino. Hay que escuchar a quienes viven allí, aprender sus tareas y entender qué necesita la comunidad.",
-    second: "Su primera jornada todavía no terminó. Antes de seguir, decide guardar lo aprendido en su libreta."
-  }
-};
-const outcomes = {
-  work: { title: "Una oportunidad para aprender", body: "Mateo se acerca a preguntar. Al principio siente vergüenza, pero descubre que escuchar y presentarse con respeto es una buena manera de empezar. Una persona del lugar le explica qué tareas se realizan en la zona y qué herramientas tendrá que aprender a usar.", stats: { trust: 1, knowledge: 1 }, note: "Mateo se animó a preguntar. Su primera lección: el trabajo también empieza conversando." },
-  explore: { title: "Mirar con atención", body: "Mateo camina un poco y observa el paisaje. Se fija en el relieve, la vegetación y la presencia del agua. Entiende que el territorio no es solamente un escenario: sus características condicionan la vida y el trabajo de quienes lo habitan.", stats: { knowledge: 2 }, note: "Mateo observó el valle y anotó que conocer el territorio es el primer paso para comprenderlo." },
-  write: { title: "La primera página", body: "Mateo abre la libreta. Anota lo que ve, las preguntas que tiene y las cosas que todavía no comprende. Tal vez algún día esas notas ayuden a recordar cómo se sentía llegar a un lugar nuevo.", stats: { memory: 2 }, note: "Primera página escrita: «Para conocer un lugar, primero hay que aprender a mirar y escuchar»." }
-};
-const $ = id => document.getElementById(id);
-function renderStats() {
-  $("stat-trust").textContent = state.trust;
-  $("stat-knowledge").textContent = state.knowledge;
-  $("stat-memory").textContent = state.memory;
-  $("progress-label").textContent = state.completed.length + " / 3";
-  $("progress-bar").style.width = (state.completed.length / 3 * 100) + "%";
-  $("notebook-empty").hidden = state.notes.length > 0;
-  $("notebook-list").innerHTML = state.notes.map(note => "<li>" + escapeHTML(note) + "</li>").join("");
-}
-function escapeHTML(value) {
-  return value.replace(/[&<>"']/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
-}
-function choose(key) {
-  if (state.completed.length > 0) return;
-  const result = outcomes[key];
-  if (!result) return;
-  state.completed.push(key);
-  state.trust += result.stats.trust || 0;
-  state.knowledge += result.stats.knowledge || 0;
-  state.memory += result.stats.memory || 0;
-  state.notes.push(result.note);
-  $("scene-title").textContent = result.title;
-  $("scene-text").textContent = result.body;
-  $("scene-text-two").textContent = "Mateo guarda sus cosas. Esta decisión quedará registrada en su recorrido, pero todavía hay mucho por descubrir.";
-  $("choices").hidden = true;
-  $("feedback").hidden = false;
-  $("feedback").textContent = "✦ " + result.note;
-  $("continue-row").hidden = false;
-  renderStats();
-}
-function continueAdventure() {
-  if (state.current === "arrival") {
-    state.current = "next";
-    $("scene-title").textContent = scenes.next.title;
-    $("scene-text").textContent = scenes.next.text;
-    $("scene-text-two").textContent = scenes.next.second;
-    $("feedback").hidden = true;
-    $("continue-row").hidden = true;
-    $("choices").hidden = false;
-    $("choices").innerHTML = '<button class="choice" data-choice="listen"><span class="choice-icon">👂</span><span><strong>Escuchar a quienes conocen el lugar</strong><small>Aprender de la experiencia de sus habitantes.</small></span><b>→</b></button><button class="choice" data-choice="tools"><span class="choice-icon">🧰</span><span><strong>Conocer las herramientas de trabajo</strong><small>Descubrir para qué sirve cada herramienta.</small></span><b>→</b></button><button class="choice" data-choice="record"><span class="choice-icon">✍️</span><span><strong>Ordenar sus notas</strong><small>Separar lo que vio de lo que todavía necesita investigar.</small></span><b>→</b></button>';
-    $("choices").querySelectorAll("button").forEach(button => button.addEventListener("click", () => chooseSecond(button.dataset.choice)));
-    $("progress-label").textContent = "1 / 3";
-    $("progress-bar").style.width = "33%";
-    $("chapter-era").textContent = "Conocer para comprender";
-  } else {
-    $("scene-title").textContent = "Fin del primer recorrido";
-    $("scene-text").textContent = "Mateo cierra su libreta. Ya dio sus primeros pasos: se acercó a la gente, observó el territorio y empezó a registrar lo que aprende. Su historia recién comienza.";
-    $("scene-text-two").textContent = "Este prototipo termina aquí. Las próximas misiones se construirán a partir de documentación histórica comprobada sobre San Patricio del Chañar.";
-    $("choices").hidden = true;
-    $("feedback").hidden = false;
-    $("feedback").textContent = "PRÓXIMAMENTE · Nuevas misiones, personajes y acontecimientos históricos documentados.";
-    $("continue-row").hidden = true;
-    $("chapter-era").textContent = "Próximo capítulo";
-    state.completed.push("finish");
-    renderStats();
-  }
-}
-function chooseSecond(key) {
-  const second = {
-    listen: { body: "Mateo se queda conversando. Descubre que la memoria de un lugar vive también en las experiencias de sus habitantes. Escuchar no reemplaza los documentos, pero puede abrir caminos para investigar.", stat: "trust", note: "Mateo aprendió que escuchar a la comunidad es parte de conocer su historia." },
-    tools: { body: "Mateo observa las herramientas y pregunta para qué se utiliza cada una. Comprende que detrás de cada tarea hay conocimientos, esfuerzo y organización.", stat: "knowledge", note: "Mateo comenzó a reconocer las herramientas y los saberes del trabajo." },
-    record: { body: "Mateo revisa sus apuntes. Separa lo que observó de lo que alguien le contó y de las preguntas que todavía no tienen respuesta. Decide no confundir recuerdos, opiniones y hechos comprobados.", stat: "memory", note: "Mateo anotó una regla para su libreta: distinguir lo observado de lo que falta comprobar." }
-  }[key];
-  if (!second) return;
-  state[second.stat] += 1;
-  state.notes.push(second.note);
-  $("scene-title").textContent = "Una lección para el camino";
-  $("scene-text").textContent = second.body;
-  $("scene-text-two").textContent = "El día termina y Mateo siente que ahora tiene más preguntas que al llegar. Es una buena señal: está empezando a conocer el lugar.";
-  $("choices").hidden = true;
-  $("feedback").hidden = false;
-  $("feedback").textContent = "✦ " + second.note;
-  $("continue-row").hidden = false;
-  $("continue-button").textContent = "Cerrar el prólogo →";
-  state.completed.push(key);
-  renderStats();
-}
-$("choices").querySelectorAll("button").forEach(button => button.addEventListener("click", () => choose(button.dataset.choice)));
-$("continue-button").addEventListener("click", continueAdventure);
-renderStats();
+const $=id=>document.getElementById(id);
+const missions=[
+{stamp:"💧",title:"El agua y la tierra",subtitle:"Antes de que creciera el pueblo",steps:[
+{kind:"🧭 MIRÁ LA PISTA",title:"Un campo por transformar",text:"Antes de las chacras y las calles que conocemos, este lugar tenía otra fisonomía. La Municipalidad cuenta que en 1966 un grupo de vecinos de Cinco Saltos adquirió el campo llamado El Chañar. Mateo encuentra esa fecha en su libreta.",question:"¿En qué año un grupo de vecinos de Cinco Saltos adquirió El Chañar?",answers:["1966","1969","1973"],correct:0,explain:"¡Bien! En 1966, un grupo de vecinos de Cinco Saltos adquirió El Chañar. La historia local también cuenta que no pudieron avanzar más allá de la subdivisión del campo.",fact:"1966 · La compra de El Chañar por un grupo de vecinos de Cinco Saltos aparece en la reseña histórica municipal.",hint:"Es el año que empieza con 19 y termina en 66.",note:"1966: un grupo de vecinos de Cinco Saltos adquirió el campo El Chañar.",source:"Municipalidad de San Patricio del Chañar · Nuestra Identidad"},
+{kind:"🧩 DESAFÍO DE MEMORIA",title:"¿Quién llegó después?",text:"La libreta tiene otra pista: entre abril y mayo de 1968, Frigorífico Cipolletti S.A. adquirió tierras de monte para desarrollar un proyecto productivo. Más adelante la firma fue absorbida por Gasparri Hnos. S.A.",question:"¿Qué firma adquirió las tierras en 1968?",answers:["Frigorífico Cipolletti S.A.","Club Atlético San Patricio","La Comisión de Fomento"],correct:0,explain:"¡Exacto! Frigorífico Cipolletti S.A. adquirió las tierras en 1968. La fuente municipal aclara que luego fue absorbida por Gasparri Hnos. S.A.",fact:"1968 · Compra de tierras por Frigorífico Cipolletti S.A., según la Municipalidad.",hint:"Su nombre recuerda a una ciudad de Río Negro.",note:"1968: Frigorífico Cipolletti S.A. adquirió las tierras; luego fue absorbida por Gasparri Hnos. S.A.",source:"Municipalidad de San Patricio del Chañar · Nuestra Identidad"},
+{kind:"💦 ACERTIJO DEL VALLE",title:"El agua cambia el paisaje",text:"Para cultivar en una zona árida no alcanza con tener tierra: hace falta agua. La reseña municipal explica que en 1969 comenzaron las obras de sistematización y que los primeros cultivos se regaron bombeando agua desde el río Neuquén.",question:"¿De dónde se bombeaba el agua para regar los primeros cultivos?",answers:["Del río Neuquén","De una laguna artificial","De la lluvia solamente"],correct:0,explain:"¡Muy bien! El agua se bombeaba desde el río Neuquén. La Municipalidad menciona tres bombas para los primeros riegos. El sistema de riego fue clave para transformar el paisaje.",fact:"1969 · Comenzaron las obras de sistematización del riego y se regaron los primeros cultivos.",hint:"Es el río que acompaña a nuestra localidad.",note:"1969: comenzaron las obras de riego; los primeros cultivos recibieron agua bombeada desde el río Neuquén.",source:"Municipalidad de San Patricio del Chañar · Nuestra Identidad"},
+{kind:"🌱 ÚLTIMA PISTA",title:"La primera cosecha",text:"Las primeras plantaciones no fueron viñedos. La historia municipal señala que el área piloto tuvo cultivos de papa, de distintas variedades, que se comercializaron durante varios años en la zona.",question:"¿Qué cultivo aparece entre las primeras cosechas del área piloto?",answers:["Uvas para vino","Papas","Nogales"],correct:1,explain:"¡Lo lograste! Las primeras cosechas mencionadas fueron de papas. Esta pista nos recuerda que la identidad productiva del Chañar fue cambiando con el tiempo.",fact:"Las primeras cosechas del área piloto incluyeron distintas variedades de papa.",hint:"Es un alimento que puede convertirse en puré o papas fritas.",note:"Las primeras cosechas del área piloto incluyeron distintas variedades de papa.",source:"Municipalidad de San Patricio del Chañar · Nuestra Identidad"}
+]},
+{stamp:"🌱",title:"Nace una localidad",subtitle:"El pueblo toma forma",steps:[
+{kind:"📅 FECHA CLAVE",title:"Un día para recordar",text:"La libreta llega a una fecha fundamental. El Gobierno de Neuquén y la Legislatura provincial ubican la fundación de San Patricio del Chañar el 21 de mayo de 1973.",question:"¿Qué día se fundó San Patricio del Chañar?",answers:["8 de abril de 1974","21 de mayo de 1973","21 de mayo de 1969"],correct:1,explain:"¡Correcto! El 21 de mayo de 1973 es la fecha de fundación de la localidad. No hay que confundirla con la puesta en funcionamiento de las autoridades de la Comisión de Fomento, que ocurrió en 1974.",fact:"21 de mayo de 1973 · Fecha de fundación de San Patricio del Chañar.",hint:"Mayo es el quinto mes del año.",note:"La fundación de San Patricio del Chañar se fecha el 21 de mayo de 1973.",source:"Gobierno de Neuquén · Aniversario de 2016; Legislatura del Neuquén"},
+{kind:"🕵️ DETECTIVE HISTÓRICO",title:"Dos fechas, dos hechos",text:"¡Ojo, detective! En algunos relatos se mezclan la fecha de fundación y la puesta en funcionamiento de la Comisión de Fomento. El Gobierno provincial informó que las autoridades comenzaron a funcionar el 8 de abril de 1974.",question:"¿Qué ocurrió el 8 de abril de 1974, según el Gobierno provincial?",answers:["Se fundó el pueblo","Comenzaron a funcionar las autoridades de la Comisión de Fomento","Se inauguró la primera bodega"],correct:1,explain:"¡Así es! La fecha de fundación es 21 de mayo de 1973; el 8 de abril de 1974 corresponde a la puesta en funcionamiento de las autoridades de la Comisión de Fomento.",fact:"1974 · Puesta en funcionamiento de las autoridades de la Comisión de Fomento.",hint:"No es la fecha de fundación: es el año siguiente.",note:"8 de abril de 1974: puesta en funcionamiento de las autoridades de la Comisión de Fomento.",source:"Gobierno de Neuquén · Aniversario de 2016"},
+{kind:"🌳 PISTA DEL NOMBRE",title:"¿Por qué Chañar?",text:"El nombre del paraje está relacionado con una especie vegetal de la zona. La Municipalidad explica que 'chañar' se vincula con el nombre quichua del chical, un árbol espinoso de madera dura.",question:"¿Qué inspiró el nombre «El Chañar»?",answers:["Un árbol de la zona","Un barco","Una montaña de otro país"],correct:0,explain:"¡Bien visto! El nombre se relaciona con el chañar, una especie vegetal presente en la zona. El nombre San Patricio tiene otra historia vinculada a Campo Filone, Italia.",fact:"El nombre Chañar se relaciona con una especie vegetal de la zona.",hint:"Buscá la respuesta en el propio nombre del pueblo.",note:"El nombre Chañar está relacionado con una especie vegetal local.",source:"Municipalidad de San Patricio del Chañar · Nuestra Identidad"},
+{kind:"🏡 MISIÓN COMPLETA",title:"El pueblo empieza a crecer",text:"Mateo ordena sus páginas: el riego, las primeras cosechas y la fundación forman parte de una historia conectada. Pero una localidad no se construye solamente con fechas: también la hacen sus familias, sus trabajos, sus escuelas, sus clubes y sus recuerdos.",question:"¿Qué hace Mateo con las pistas que encontró?",answers:["Las guarda y sigue investigando","Las borra porque son antiguas","Inventa una fecha nueva"],correct:0,explain:"¡Misión cumplida! Aprendiste a relacionar fechas, distinguir acontecimientos y consultar fuentes. La historia sigue: cada generación suma nuevas páginas.",fact:"La historia local se construye con documentos, testimonios y memoria comunitaria.",hint:"Un buen investigador conserva las pistas.",note:"Investigar la historia requiere guardar fuentes, distinguir hechos y seguir preguntando.",source:"Criterio de investigación de Ocarina LAB"}
+]},
+{stamp:"🍎",title:"La vida en las chacras",subtitle:"Trabajo, familias y comunidad",steps:[
+{kind:"🚧 EN PREPARACIÓN",title:"Una historia que merece más voces",text:"Esta misión va a recorrer la vida cotidiana de las chacras, los trabajos, las familias y las primeras instituciones. Antes de convertirla en juego, estamos reuniendo documentos, fotografías y testimonios identificables.",question:"¿Qué fuente ayuda a reconstruir la vida cotidiana?",answers:["Fotografías fechadas y testimonios identificados","Un rumor sin autor","Una fecha inventada"],correct:0,explain:"La misión completa se incorporará cuando tengamos fuentes suficientes. Una fotografía con fecha y procedencia o un testimonio identificado pueden aportar información valiosa, siempre diferenciándolos de los documentos oficiales.",fact:"Esta misión todavía no contiene una reconstrucción histórica cerrada.",hint:"La fuente debe poder identificarse y consultarse.",note:"Para contar la vida en las chacras hacen falta fotografías, documentos y testimonios identificados.",source:"En investigación"}
+]},
+{stamp:"🏡",title:"Memorias del pueblo",subtitle:"Las historias de quienes lo habitan",steps:[
+{kind:"🎙️ EN PREPARACIÓN",title:"Una comunidad de recuerdos",text:"La última misión será una búsqueda de historias familiares, fotografías antiguas, escuelas, clubes, comercios y espacios compartidos. No vamos a atribuir frases ni recuerdos a personas reales sin autorización y fuente.",question:"¿Cómo se debe presentar un testimonio?",answers:["Con identidad, contexto y autorización","Como si fuera un documento oficial","Cambiando sus palabras sin aclararlo"],correct:0,explain:"Un testimonio debe tener contexto, atribución y autorización cuando corresponda. La memoria oral es valiosa, pero hay que presentarla con honestidad.",fact:"Los recuerdos personales aportan memoria; no sustituyen automáticamente la documentación.",hint:"Respetar a quien comparte su historia es parte del trabajo.",note:"Los testimonios deben presentarse con contexto, atribución y autorización.",source:"Criterio de investigación de Ocarina LAB"}
+]}
+];
+let state={mission:0,step:0,score:0,completed:[],notes:[],stamps:[],sound:false,answered:false};
+const storageKey="ocarina-camino-chanar-v2";
+function save(){try{localStorage.setItem(storageKey,JSON.stringify(state));$("save-state").textContent="● Partida guardada";}catch(e){$("save-state").textContent="● Partida temporal";}}
+function load(){try{const s=JSON.parse(localStorage.getItem(storageKey)||"null");if(s&&Number.isInteger(s.mission)&&Number.isInteger(s.step)&&s.mission>=0&&s.mission<missions.length){state={...state,...s};}}catch(e){}}
+function current(){return missions[state.mission].steps[state.step];}
+function render(){const m=missions[state.mission],s=current();$("chapter-chip").textContent="MISIÓN "+String(state.mission+1).padStart(2,"0");$("chapter-subtitle").textContent=m.subtitle;$("step-counter").textContent=(state.step+1)+" / "+m.steps.length;$("mission-kicker").textContent=s.kind;$("mission-kind").textContent=state.mission===0?"🧭 EXPLORACIÓN":state.mission===1?"📚 HISTORIA":"🌿 COMUNIDAD";$("scene-title").textContent=s.title;$("scene-text").textContent=s.text;$("fact-tag").textContent=s.fact;$("question").textContent=s.question;$("answer-list").innerHTML=s.answers.map((a,i)=>'<button class="answer-button" data-index="'+i+'"><span class="answer-letter">'+String.fromCharCode(65+i)+'</span><span>'+a+'</span></button>').join("");$("result-panel").hidden=true;$("next-button").hidden=true;$("next-button").textContent=state.step===m.steps.length-1?(state.mission===missions.length-1?"Volver a jugar →":"Completar misión →"):"Siguiente desafío →";$("hint-button").disabled=false;$("guide-title").textContent=s.fact.split("·")[0].trim()||"Dato para guardar";$("guide-text").textContent=s.note;$("scene-art").setAttribute("data-mission",state.mission);$("scene-art").setAttribute("data-step",state.step);$("question").focus?.();$("answer-list").querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>answer(Number(b.dataset.index))));renderSidebar();}
+function answer(index){if(state.answered)return;state.answered=true;const s=current(),ok=index===s.correct;const buttons=$("answer-list").querySelectorAll("button");buttons.forEach((b,i)=>{b.disabled=true;if(i===s.correct)b.classList.add("correct");else if(i===index)b.classList.add("wrong");});if(ok){state.score+=10;$("result-panel").className="result-panel";$("result-panel").textContent="⭐ ¡Muy bien! "+s.explain;}else{$("result-panel").className="result-panel wrong-result";$("result-panel").textContent="Casi, pero no. "+s.explain;}if(!state.notes.includes(s.note))state.notes.push(s.note);$("result-panel").hidden=false;$("next-button").hidden=false;$("hint-button").disabled=true;renderSidebar();save();}
+function next(){if(!state.answered)return;const m=missions[state.mission];if(state.step<m.steps.length-1){state.step++;state.answered=false;render();return;}if(!state.completed.includes(state.mission)){state.completed.push(state.mission);state.stamps.push(m.stamp);}if(state.mission<missions.length-1){state.mission++;state.step=0;state.answered=false;render();}else{state.mission=0;state.step=0;state.answered=false;state.score=0;state.completed=[];state.stamps=[];state.notes=[];render();}save();}
+function renderSidebar(){$("score").textContent=state.score;$("mission-progress").textContent=state.completed.length+" / 4";$("stamp-count").textContent=state.stamps.length+" / 4";$("progress-bar").style.width=(state.completed.length/4*100)+"%";$("stamps").innerHTML=missions.map((m,i)=>'<span class="stamp '+(state.stamps.includes(m.stamp)?"":"empty")+'">'+m.stamp+'</span>').join("");$("notebook-empty").hidden=state.notes.length>0;$("note-count").textContent=state.notes.length;$("notebook-list").innerHTML=state.notes.map(n=>"<li>"+escapeHTML(n)+"</li>").join("");}
+function escapeHTML(v){return v.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+$("hint-button").addEventListener("click",()=>{const s=current();$("result-panel").className="result-panel";$("result-panel").textContent="💡 Pista: "+s.hint;$("result-panel").hidden=false;});
+$("next-button").addEventListener("click",next);
+$("reset-button").addEventListener("click",()=>{if(!confirm("¿Querés borrar tu partida y empezar de nuevo?"))return;state={mission:0,step:0,score:0,completed:[],notes:[],stamps:[],sound:false,answered:false};save();render();});
+$("sound-toggle").addEventListener("click",()=>{state.sound=!state.sound;$("sound-toggle").textContent=state.sound?"🔊 Sonido: activado":"🔈 Sonido: apagado";$("sound-toggle").setAttribute("aria-pressed",String(state.sound));});
+load();render();
