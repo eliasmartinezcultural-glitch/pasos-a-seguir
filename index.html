@@ -14,7 +14,7 @@
  <div class="hud-right"><span class="save-indicator" id="save-indicator">● PARTIDA GUARDADA</span><button id="reset-button" class="icon-button" aria-label="Reiniciar partida" title="Reiniciar partida">↻</button></div>
 </header>
 <main>
-<section class="intro-strip"><div><span class="live-dot"></span> MUNDO EN CONSTRUCCIÓN <span class="intro-divider">/</span> CAPÍTULO I: EL AGUA QUE CAMBIÓ EL VALLE</div><div class="intro-hint">Explorá el mapa · Hablá con los habitantes · Cumplí misiones</div></section>
+<section class="intro-strip" id="mobile-help"><div><span class="live-dot"></span> MUNDO EN CONSTRUCCIÓN <span class="intro-divider">/</span> CAPÍTULO I: EL AGUA QUE CAMBIÓ EL VALLE</div><div class="intro-hint">Explorá el mapa · Hablá con los habitantes · Cumplí misiones</div></section>
 <section class="world-layout">
  <div class="world-column">
   <div class="map-toolbar"><div><span class="eyebrow">MAPA DEL MUNDO</span><h1>El valle del Chañar</h1></div><div class="map-tools"><span class="map-coord">NEUQUÉN · PATAGONIA</span><button class="map-button" id="map-legend">ⓘ ¿Cómo jugar?</button></div></div>
@@ -74,6 +74,16 @@
     <button class="map-pin town-pin" data-place="town" id="pin-town" aria-label="Explorar casco urbano"><span>🏡</span><small>PUEBLO</small></button>
     <button class="map-pin npc-pin npc-one" data-person="mateo" aria-label="Hablar con Mateo"><span>🧢</span><small>MATEO</small></button>
     <button class="map-pin npc-pin npc-two" data-person="julia" aria-label="Hablar con Julia"><span>👩🏻‍🌾</span><small>JULIA</small></button>
+   </div>
+   <div class="game-controls" aria-label="Controles del juego">
+    <div class="move-pad" aria-label="Mover al personaje">
+     <button type="button" data-move="up" aria-label="Arriba">▲</button>
+     <button type="button" data-move="left" aria-label="Izquierda">◀</button>
+     <button type="button" data-move="down" aria-label="Abajo">▼</button>
+     <button type="button" data-move="right" aria-label="Derecha">▶</button>
+    </div>
+    <div class="play-hint"><b>WASD / FLECHAS</b><span>Movete por el valle</span></div>
+    <button type="button" class="interact-button" id="interact-button">INTERACTUAR <kbd>E</kbd></button>
    </div>
    <div class="map-bottom"><span>◉ MAPA ESQUEMÁTICO NARRATIVO</span><span>NO ES UN PLANO CATASTRAL</span></div>
   </div>
