@@ -1,54 +1,95 @@
 <!doctype html>
 <html lang="es">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#254a3a">
-<meta name="description" content="Una aventura para jugar y descubrir la historia real de San Patricio del Chañar.">
-<title>El Camino del Chañar · Ocarina LAB</title>
-<link rel="stylesheet" href="styles.css">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#182f28">
+<meta name="description" content="Simulador histórico y aventura de exploración de San Patricio del Chañar.">
+<title>El Camino del Chañar — Ocarina LAB</title><link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div class="app-shell">
-<header class="topbar">
-  <a class="brand" href="#" aria-label="El Camino del Chañar, inicio"><span class="brand-mark">OC</span><span><strong>OCARINA LAB</strong><small>Historias que se pueden jugar</small></span></a>
-  <div class="top-actions"><span class="save-state" id="save-state">● Partida local</span></div>
+<div class="game">
+<header class="hud">
+ <a class="brand" href="#" aria-label="El Camino del Chañar"><span class="brand-icon">OC</span><span><b>OCARINA LAB</b><small>SIMULADOR HISTÓRICO</small></span></a>
+ <div class="hud-center"><span class="world-name">SAN PATRICIO DEL CHAÑAR</span><span class="world-era" id="era-label">EL TERRITORIO · 1966</span></div>
+ <div class="hud-right"><span class="save-indicator" id="save-indicator">● PARTIDA GUARDADA</span><button id="sound-button" class="icon-button" aria-label="Activar sonido" title="Sonido apagado">🔈</button></div>
 </header>
 <main>
-<section class="hero">
- <div class="hero-copy"><p class="eyebrow">AVENTURA HISTÓRICA · SAN PATRICIO DEL CHAÑAR</p><h1>EL CAMINO<br><em>DEL CHAÑAR</em></h1><p class="hero-lead">Un pueblo, muchas historias. Ayudá a Mateo a descubrirlas jugando.</p><div class="hero-pills"><span>🧭 Explorá</span><span>🧩 Resolvé</span><span>📚 Aprendé</span></div></div>
- <div class="landscape" role="img" aria-label="Ilustración de un valle patagónico, el río y un camino"><div class="sun"></div><div class="mesa mesa-back"></div><div class="mesa mesa-front"></div><div class="river"></div><div class="road"></div><div class="bush bush-one"></div><div class="bush bush-two"></div><span class="land-caption">VALLE · NEUQUÉN · PATAGONIA</span></div>
-</section>
-<section class="game-grid" aria-label="Juego">
- <section class="play-area">
-  <div class="chapter-bar"><span class="chapter-chip" id="chapter-chip">MISIÓN 01</span><span id="chapter-subtitle">El agua y la tierra</span><span class="chapter-spacer"></span><span class="step-counter" id="step-counter">0 / 4</span></div>
-  <article class="mission-card">
-   <div class="mission-top"><span class="mission-kicker" id="mission-kicker">PRIMERA EXPEDICIÓN</span><span class="mission-kind" id="mission-kind">🧭 EXPLORACIÓN</span></div>
-   <div class="scene-art" id="scene-art" aria-hidden="true"><span class="art-sun"></span><span class="art-hill hill-a"></span><span class="art-hill hill-b"></span><span class="art-river"></span><span class="art-path"></span><span class="art-character">🧢</span></div>
-   <h2 id="scene-title">Una libreta, un camino y muchas preguntas</h2>
-   <p class="scene-text" id="scene-text">Mateo encontró una vieja libreta de viaje. En sus páginas hay pistas sobre cómo fue cambiando este lugar. Tu misión es ayudarlo a ordenar las pistas y descubrir qué pasó de verdad.</p>
-   <div class="fact-tag" id="fact-tag">FICCIÓN + HISTORIA DOCUMENTADA</div>
-   <div class="challenge" id="challenge">
-    <p class="question" id="question">¿Te animás a empezar la aventura?</p>
-    <div class="answer-list" id="answer-list"><button class="answer-button" data-answer="start"><span class="answer-letter">▶</span><span>¡Vamos a descubrir el Chañar!</span></button></div>
+<section class="intro-strip"><div><span class="live-dot"></span> MUNDO EN CONSTRUCCIÓN <span class="intro-divider">/</span> CAPÍTULO I: EL AGUA QUE CAMBIÓ EL VALLE</div><div class="intro-hint">Explorá el mapa · Hablá con los habitantes · Cumplí misiones</div></section>
+<section class="world-layout">
+ <div class="world-column">
+  <div class="map-toolbar"><div><span class="eyebrow">MAPA DEL MUNDO</span><h1>El valle del Chañar</h1></div><div class="map-tools"><span class="map-coord">NEUQUÉN · PATAGONIA</span><button class="map-button" id="map-legend">ⓘ ¿Cómo jugar?</button></div></div>
+  <div class="map-frame">
+   <div class="map-top-label"><span>☀ DÍA CLARO</span><span id="map-date">AÑO 1966</span></div>
+   <svg id="world-map" viewBox="0 0 1000 620" role="img" aria-label="Mapa ilustrado del territorio del Chañar que cambia con la historia">
+    <defs>
+     <pattern id="sand" width="70" height="70" patternUnits="userSpaceOnUse"><circle cx="12" cy="16" r="2" fill="#c9ad79" opacity=".38"/><circle cx="48" cy="52" r="1.5" fill="#b89d70" opacity=".35"/><path d="M20 48l9 -3" stroke="#c5a878" opacity=".35"/></pattern>
+     <pattern id="field-lines" width="18" height="18" patternUnits="userSpaceOnUse"><path d="M0 18L18 0" stroke="#fff6d8" stroke-width="2" opacity=".4"/></pattern>
+     <linearGradient id="river-fill" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#79b6b1"/><stop offset="1" stop-color="#468e91"/></linearGradient>
+     <filter id="soft-shadow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#493b2c" flood-opacity=".2"/></filter>
+    </defs>
+    <rect width="1000" height="620" fill="#d7c59c"/><rect width="1000" height="620" fill="url(#sand)"/>
+    <path d="M0 0H1000V126Q910 150 835 126T670 136T500 125T330 143T160 122T0 143Z" fill="#9e9a79"/>
+    <path d="M0 0H1000V72Q860 92 770 68T560 83T340 67T150 88T0 68Z" fill="#7c866c"/>
+    <path d="M0 148Q150 125 270 154T510 147T760 154T1000 140V196Q820 210 690 194T430 205T180 194T0 208Z" fill="url(#river-fill)"/>
+    <path d="M0 173Q160 151 295 178T550 174T790 181T1000 163" fill="none" stroke="#d0eeee" stroke-width="5" opacity=".55"/>
+    <g fill="#788263" opacity=".8"><path d="M40 250l55 -30 55 30-55 7z"/><path d="M800 245l62 -25 57 30-60 8z"/><path d="M700 530l60 -26 58 24-60 10z"/></g>
+    <g id="old-tracks" fill="none" stroke="#b18c61" stroke-width="7" stroke-linecap="round" opacity=".8"><path d="M70 560Q210 480 325 520T600 485T900 540"/><path d="M400 250Q445 320 420 390T500 530"/></g>
+    <g id="irrigation-layer" opacity="0">
+      <path d="M155 205Q300 214 420 208T700 214L840 215" stroke="#6b9b80" stroke-width="22" fill="none" stroke-linecap="round"/>
+      <path d="M155 205Q300 214 420 208T700 214L840 215" stroke="#c6e2bc" stroke-width="12" fill="none" stroke-linecap="round"/>
+      <path d="M420 210Q415 290 345 330L285 370" stroke="#c6e2bc" stroke-width="9" fill="none"/>
+      <path d="M600 212Q610 300 690 350L760 405" stroke="#c6e2bc" stroke-width="9" fill="none"/>
+      <path d="M780 215Q810 290 875 320" stroke="#c6e2bc" stroke-width="8" fill="none"/>
+      <path d="M155 205Q300 214 420 208T700 214L840 215" stroke="#efffe2" stroke-width="3" fill="none" stroke-dasharray="16 18" class="water-dash"/>
+    </g>
+    <g id="pump-layer" opacity="0" filter="url(#soft-shadow)"><rect x="115" y="183" width="60" height="45" rx="7" fill="#d5d0bd" stroke="#6d705c" stroke-width="4"/><rect x="127" y="194" width="34" height="22" rx="3" fill="#9b7650"/><path d="M145 182V163H182" stroke="#697d72" stroke-width="8" fill="none"/><circle cx="145" cy="206" r="8" fill="#5e817a"/></g>
+    <g id="fields-layer" opacity="0">
+      <g stroke="#f6e7b8" stroke-width="5"><path d="M220 265L395 268L375 390L202 386Z" fill="#a2a96c"/><path d="M445 255L610 260L630 390L430 390Z" fill="#b5a56b"/><path d="M660 260L830 262L875 380L690 388Z" fill="#8d9e64"/></g>
+      <g fill="url(#field-lines)"><path d="M220 265L395 268L375 390L202 386Z"/><path d="M445 255L610 260L630 390L430 390Z"/><path d="M660 260L830 262L875 380L690 388Z"/></g>
+    </g>
+    <g id="orchard-layer" opacity="0">
+      <g fill="#47734d" stroke="#d7e3a9" stroke-width="2">
+       <circle cx="255" cy="294" r="12"/><circle cx="300" cy="294" r="12"/><circle cx="345" cy="294" r="12"/><circle cx="255" cy="344" r="12"/><circle cx="300" cy="344" r="12"/><circle cx="345" cy="344" r="12"/>
+       <circle cx="485" cy="293" r="12"/><circle cx="530" cy="293" r="12"/><circle cx="575" cy="293" r="12"/><circle cx="485" cy="344" r="12"/><circle cx="530" cy="344" r="12"/><circle cx="575" cy="344" r="12"/>
+      </g><g fill="#d3a66c"><circle cx="255" cy="294" r="4"/><circle cx="300" cy="294" r="4"/><circle cx="345" cy="294" r="4"/><circle cx="255" cy="344" r="4"/><circle cx="300" cy="344" r="4"/><circle cx="345" cy="344" r="4"/></g>
+    </g>
+    <g id="town-layer" opacity="0">
+      <path d="M390 420L770 420M480 400L480 570M640 400L640 570" stroke="#c8a77d" stroke-width="28" fill="none"/>
+      <path d="M390 420L770 420M480 400L480 570M640 400L640 570" stroke="#f0dfbc" stroke-width="18" fill="none"/>
+      <g stroke="#886d55" stroke-width="3"><g fill="#e8d1a4"><rect x="420" y="445" width="50" height="40" rx="3"/><rect x="510" y="445" width="58" height="40" rx="3"/><rect x="675" y="445" width="56" height="40" rx="3"/><rect x="420" y="505" width="55" height="42" rx="3"/><rect x="680" y="505" width="60" height="42" rx="3"/></g><g fill="#a96d53"><path d="M414 445l31 -23 31 23z"/><path d="M505 445l34 -24 34 24z"/><path d="M670 445l34 -24 34 24z"/><path d="M414 505l33 -22 33 22z"/><path d="M674 505l35 -22 35 22z"/></g></g>
+      <rect x="565" y="500" width="54" height="48" rx="3" fill="#e4dfc8" stroke="#7f735e" stroke-width="3"/><path d="M560 500l32 -22 32 22" fill="#ad7955" stroke="#7f735e" stroke-width="3"/>
+    </g>
+    <g id="label-layer" font-family="system-ui" font-weight="800" font-size="17" fill="#fff9e8" stroke="#6c6652" stroke-width="3" paint-order="stroke">
+      <text x="44" y="35">RÍO NEUQUÉN</text><text x="54" y="270">TERRITORIO</text><text x="780" y="590" id="town-label">CAMPO ABIERTO</text>
+    </g>
+    <g id="trees-static" fill="#62734f"><path d="M60 415l17 -42 17 42h-10v17H70v-17z"/><path d="M915 420l18 -46 18 46h-11v18h-14v-18z"/><path d="M90 500l14 -35 14 35h-8v15h-12v-15z"/></g>
+    <g id="player-marker" transform="translate(460 470)" filter="url(#soft-shadow)"><circle r="23" fill="#fff4d6" stroke="#294b3c" stroke-width="4"/><text text-anchor="middle" y="9" font-size="25">🧢</text><circle r="31" fill="none" stroke="#fff5db" stroke-width="3" stroke-dasharray="5 7" class="marker-pulse"/></g>
+   </svg>
+   <div class="map-pins">
+    <button class="map-pin river-pin" data-place="river" aria-label="Explorar río Neuquén"><span>🌊</span><small>RÍO</small></button>
+    <button class="map-pin pump-pin" data-place="pump" id="pin-pump" aria-label="Explorar zona de bombeo"><span>⚙️</span><small>BOMBEO</small></button>
+    <button class="map-pin field-pin" data-place="field" id="pin-field" aria-label="Explorar parcelas"><span>🌱</span><small>PARCELAS</small></button>
+    <button class="map-pin town-pin" data-place="town" id="pin-town" aria-label="Explorar casco urbano"><span>🏡</span><small>PUEBLO</small></button>
+    <button class="map-pin npc-pin npc-one" data-person="mateo" aria-label="Hablar con Mateo"><span>🧢</span><small>MATEO</small></button>
+    <button class="map-pin npc-pin npc-two" data-person="julia" aria-label="Hablar con Julia"><span>👩🏻‍🌾</span><small>JULIA</small></button>
    </div>
-   <div class="result-panel" id="result-panel" aria-live="polite" hidden></div>
-   <div class="mission-actions"><button class="secondary-button" id="hint-button" type="button">💡 Una pista</button><button class="primary-button" id="next-button" type="button" hidden>Seguir jugando <span>→</span></button></div>
-  </article>
-  <section class="field-guide">
-   <div class="guide-icon">📜</div><div><p class="eyebrow">DATO PARA GUARDAR</p><h3 id="guide-title">La historia se investiga</h3><p id="guide-text">En este juego, Mateo y sus diálogos son ficticios. Los hechos históricos aparecen con sus fuentes para que puedas comprobarlos.</p></div>
-  </section>
- </section>
- <aside class="sidebar">
-  <section class="player-card"><div class="player-head"><div class="avatar">M</div><div><p class="eyebrow">TU COMPAÑERO DE AVENTURA</p><h3>Mateo</h3><p class="muted">Curioso · Observador · Aprendiz</p></div></div><p class="player-copy">Mateo es un personaje inventado. Vos decidís cómo avanza y qué aprende.</p></section>
-  <section class="score-card"><div class="card-heading"><h3>Tu aventura</h3><span class="star-score">⭐ <b id="score">0</b></span></div><div class="progress-track"><span id="progress-bar"></span></div><div class="score-row"><span>Misiones completas</span><strong id="mission-progress">0 / 4</strong></div><div class="score-row"><span>Sellos encontrados</span><strong id="stamp-count">0 / 4</strong></div><div class="stamps" id="stamps"><span class="stamp empty">💧</span><span class="stamp empty">🌱</span><span class="stamp empty">🍎</span><span class="stamp empty">🏡</span></div></section>
-  <section class="notebook-card"><div class="card-heading"><h3>📓 Libreta de Mateo</h3><span id="note-count">0</span></div><p id="notebook-empty">Todavía no hay datos guardados. Cada misión suma una página.</p><ul id="notebook-list"></ul></section>
-  <button class="reset-button" id="reset-button" type="button">↻ Volver a empezar</button>
+   <div class="map-bottom"><span>◉ MAPA ESQUEMÁTICO NARRATIVO</span><span>NO ES UN PLANO CATASTRAL</span></div>
+  </div>
+  <div class="map-key"><span><i class="key-dot river-key"></i> Río</span><span><i class="key-dot water-key"></i> Canales de riego</span><span><i class="key-dot field-key"></i> Parcelas</span><span><i class="key-dot town-key"></i> Asentamiento</span></div>
+  <section class="timeline-panel"><div class="timeline-head"><div><span class="eyebrow">EL TIEMPO TAMBIÉN SE JUEGA</span><h2>La transformación del valle</h2></div><span class="timeline-tip">Elegí un año ya descubierto</span></div><div class="timeline" id="timeline"><button class="time-node active" data-year="1966"><b>1966</b><span>La tierra</span></button><button class="time-node locked" data-year="1968"><b>1968</b><span>La inversión</span></button><button class="time-node locked" data-year="1969"><b>1969</b><span>El agua</span></button><button class="time-node locked" data-year="1971"><b>1971</b><span>La bocatoma</span></button><button class="time-node locked" data-year="1973"><b>1973</b><span>El pueblo</span></button></div></section>
+ </div>
+ <aside class="side-panel">
+  <section class="mission-panel"><div class="panel-overline"><span>📍 TU MISIÓN ACTUAL</span><span class="mission-number" id="mission-number">01 / 05</span></div><h2 id="mission-title">Conocé el territorio</h2><p id="mission-description">Recorré el campo, acercate al río y descubrí por qué este lugar era tan distinto.</p><div class="objective-box"><span>OBJETIVO</span><b id="objective-text">Explorá el campo El Chañar.</b><small id="objective-progress">0 de 1 acciones</small><div class="objective-bar"><i id="objective-bar-fill"></i></div></div><button class="main-action" id="mission-action">Ver indicaciones <span>→</span></button></section>
+  <section class="people-panel"><div class="section-head"><h3>Habitantes del mundo</h3><span class="live-pill"><i></i> VIVOS</span></div><div class="person-row" data-person="mateo"><div class="person-avatar avatar-mateo">🧢</div><div><b>Mateo</b><small>Tu personaje · Explorador</small></div><button aria-label="Hablar con Mateo">↗</button></div><div class="person-row" data-person="julia"><div class="person-avatar avatar-julia">👩🏻‍🌾</div><div><b>Julia</b><small>Vecina ficticia · Trabajadora rural</small></div><button aria-label="Hablar con Julia">↗</button></div><p class="people-note">Los personajes de esta versión son ficticios. No representan testimonios reales.</p></section>
+  <section class="inventory-panel"><div class="section-head"><h3>Tu mochila</h3><span id="inventory-count">1 objeto</span></div><div class="inventory-items" id="inventory-items"><div class="inventory-item"><span>📓</span><small>Libreta</small></div></div></section>
+  <section class="history-log"><div class="section-head"><h3>Bitácora del pueblo</h3><span>📜</span></div><div id="history-items"><p class="empty-log">Todavía no hay acontecimientos descubiertos.</p></div></section>
  </aside>
 </section>
-<section class="history-section"><div class="history-heading"><p class="eyebrow">NUESTRA REGLA</p><h2>La aventura puede ser ficción.<br>La historia, no.</h2><p>Las escenas y Mateo son recreaciones. Los datos históricos se apoyan en fuentes identificadas. Si una fecha o un relato necesita más investigación, lo vamos a señalar.</p></div><div class="source-list"><h3>Fuentes de esta primera misión</h3><a href="https://www.sanpatricio.gob.ar/identidad" target="_blank" rel="noopener">Municipalidad de San Patricio del Chañar · Nuestra Identidad ↗</a><a href="https://www.neuqueninforma.gob.ar/noticias/2016/05/20/81371-san-patricio-del-chanar-festeja-manana-sus-43-anos" target="_blank" rel="noopener">Gobierno de Neuquén · Aniversario y fundación ↗</a><a href="https://www.legislaturaneuquen.gob.ar/SVRFILES/hln/documentos/DiaSesio/XLVIII/DXLVIII_08.pdf" target="_blank" rel="noopener">Legislatura del Neuquén · Reseña histórica ↗</a></div></section>
+<section class="bottom-info"><div><span class="eyebrow">UNA REGLA INNEGOCIABLE</span><h2>El mundo cambia con la historia real.</h2><p>Los acontecimientos están basados en fuentes históricas. Los diálogos, protagonistas secundarios y escenas son recreaciones identificadas como ficción. El mapa es esquemático: no representa ubicaciones exactas ni límites parcelarios.</p></div><div class="sources"><b>Fuentes de investigación</b><a href="https://www.sanpatricio.gob.ar/identidad" target="_blank" rel="noopener">Municipalidad · Nuestra Identidad ↗</a><a href="https://www.mininterior.gob.ar/planificacion/pdf/planes-loc/NEUQUEN/Plan-de-Ordenamiento-Territorial-Ambiental-para-las-localidades-A%C3%B1elo-San-Patricio-del-Cha%C3%B1ar-y-Sauzal-Bonito.pdf" target="_blank" rel="noopener">Consejo Federal de Inversiones · Ordenamiento territorial ↗</a><a href="https://www.legislaturaneuquen.gob.ar/SVRFILES/hln/documentos/DiaSesio/XLVIII/DXLVIII_08.pdf" target="_blank" rel="noopener">Legislatura del Neuquén · Reseña histórica ↗</a></div></section>
 </main>
-<footer><span>EL CAMINO DEL CHAÑAR</span><span>Una producción de Ocarina LAB · Ocarina Producciones</span></footer>
+<footer><span>EL CAMINO DEL CHAÑAR · OCARINA LAB</span><span>SIMULADOR HISTÓRICO EN DESARROLLO · VERSIÓN 0.3</span></footer>
 </div>
+<div class="dialog-backdrop" id="dialog-backdrop" hidden><section class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title"><button class="dialog-close" id="dialog-close" aria-label="Cerrar">×</button><div class="dialog-character" id="dialog-character">🧢</div><span class="eyebrow" id="dialog-role">PERSONAJE</span><h2 id="dialog-title">Una conversación</h2><p id="dialog-text"></p><div class="dialog-choices" id="dialog-choices"></div></section></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script src="app.js"></script>
 </body></html>
