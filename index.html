@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#263d32">
+  <meta name="description" content="El Camino del Chañar: una aventura histórica interactiva de Ocarina LAB.">
+  <title>El Camino del Chañar · Ocarina LAB</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="site-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="El Camino del Chañar, inicio">
+        <span class="brand-mark">OC</span>
+        <span><strong>OCARINA LAB</strong><small>Historias que se pueden jugar</small></span>
+      </a>
+      <span class="top-tag">PROTOTIPO 01</span>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="game-title">
+        <div class="hero-copy">
+          <p class="eyebrow">UNA AVENTURA HISTÓRICA INTERACTIVA</p>
+          <h1 id="game-title">EL CAMINO<br><em>DEL CHAÑAR</em></h1>
+          <p class="hero-lead">Una vida. Un pueblo. Una historia que merece ser jugada.</p>
+          <div class="hero-meta"><span>📍 San Patricio del Chañar</span><span>🎒 Mateo, protagonista</span></div>
+        </div>
+        <div class="landscape" role="img" aria-label="Ilustración de un paisaje patagónico con río, meseta y un camino rural">
+          <div class="sun"></div><div class="mesa mesa-back"></div><div class="mesa mesa-front"></div>
+          <div class="river"></div><div class="road"></div><div class="bush bush-one"></div><div class="bush bush-two"></div>
+          <div class="land-caption">VALLE · PATAGONIA · NEUQUÉN</div>
+        </div>
+      </section>
+
+      <section class="game-layout" aria-label="Aventura">
+        <div class="story-column">
+          <div class="chapter-line"><span class="chapter-number">PRÓLOGO</span><span class="chapter-rule"></span><span class="chapter-era">Los primeros pasos</span></div>
+          <article class="story-card">
+            <div class="scene-top"><span class="scene-label">ESCENA 01 · LA LLEGADA</span><span class="weather">☀ Día despejado</span></div>
+            <h2 id="scene-title">Un lugar para empezar</h2>
+            <p class="scene-text" id="scene-text">El camino se abre frente a Mateo. Tiene 19 años, una valija pequeña y una libreta nueva. Ha llegado a la zona buscando trabajo. No conoce a nadie todavía, pero quiere entender cómo se vive y se trabaja en este lugar.</p>
+            <p class="scene-text" id="scene-text-two">A lo lejos se ve el valle. El viento levanta un poco de polvo. Mateo se detiene, mira alrededor y debe decidir por dónde empezar.</p>
+            <div class="scene-note"><span>✎</span><span>Esta escena es una recreación ficticia. Mateo y sus diálogos no son personajes ni testimonios históricos reales.</span></div>
+            <div class="choice-heading"><span>¿QUÉ HACE MATEO?</span><span class="choose-hint">Elegí una acción</span></div>
+            <div class="choices" id="choices">
+              <button class="choice" data-choice="work"><span class="choice-icon">🧑‍🌾</span><span><strong>Preguntar dónde necesitan trabajadores</strong><small>Buscar una oportunidad y conocer a la gente del lugar.</small></span><b>→</b></button>
+              <button class="choice" data-choice="explore"><span class="choice-icon">🌿</span><span><strong>Caminar y observar el territorio</strong><small>Reconocer el paisaje, el agua y los caminos.</small></span><b>→</b></button>
+              <button class="choice" data-choice="write"><span class="choice-icon">📓</span><span><strong>Anotar lo que ve en su libreta</strong><small>Guardar sus primeras impresiones para el futuro.</small></span><b>→</b></button>
+            </div>
+            <div class="feedback" id="feedback" aria-live="polite" hidden></div>
+            <div class="continue-row" id="continue-row" hidden><button class="primary-button" id="continue-button">Continuar la aventura <span>→</span></button></div>
+          </article>
+        </div>
+
+        <aside class="side-column">
+          <section class="mate-card">
+            <div class="portrait">M</div>
+            <div><p class="eyebrow">TU PROTAGONISTA</p><h3>Mateo</h3><p class="muted">19 años · Recién llegado</p></div>
+            <p class="mate-description">No es un héroe. Es alguien común que aprenderá a formar parte de una comunidad.</p>
+          </section>
+          <section class="status-card">
+            <div class="side-title"><h3>Su recorrido</h3><span id="progress-label">0 / 3</span></div>
+            <div class="progress-track"><span id="progress-bar"></span></div>
+            <div class="stat-list">
+              <div><span>🤝 Vínculos</span><strong id="stat-trust">0</strong></div>
+              <div><span>🧭 Conocimiento</span><strong id="stat-knowledge">0</strong></div>
+              <div><span>📓 Memoria</span><strong id="stat-memory">0</strong></div>
+            </div>
+          </section>
+          <section class="notebook-card">
+            <div class="notebook-heading"><span>📓</span><h3>La libreta de Mateo</h3></div>
+            <p id="notebook-empty">Todavía no hay recuerdos escritos. Cada descubrimiento puede convertirse en una página.</p>
+            <ul id="notebook-list"></ul>
+          </section>
+        </aside>
+      </section>
+
+      <section class="history-promise">
+        <div class="promise-icon">⌂</div>
+        <div><p class="eyebrow">UN COMPROMISO DE OCARINA LAB</p><h2>La aventura puede ser ficción.<br>La historia, no.</h2><p>Las misiones, los diálogos y Mateo son recreaciones. Las fechas, los acontecimientos y los datos históricos se incorporarán únicamente después de comprobarlos con fuentes documentales.</p></div>
+      </section>
+    </main>
+
+    <footer><span>EL CAMINO DEL CHAÑAR</span><span>Una producción de Ocarina LAB · Ocarina Producciones</span></footer>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
